@@ -15,7 +15,7 @@ const users = (req, res, next) => {
 }
 
 const user = (req, res, next) => {
-    User.find({ email: req.body.email, password: req.body.password,  is_active: false}).then(response => {
+    User.find({ email: req.body.email, password: req.body.password,  is_active: true}).then(response => {
         if (response.length > 0) {
             res.json({ "data": response, "message": "", "error": ""})
         }
@@ -79,7 +79,7 @@ const updateUserPassword = (req, res, next)=>{
 const toggleUser = (req, res, next)=>{
     User.updateOne({uuid: req.body.uuid}, {$set:{ is_active : req.body.is_active}}).then(response=>{
         if (response.modifiedCount > 0) {
-            let status = !req.body.is_active ? "Enabled": "Disabled";
+            let status = req.body.is_active ? "Enabled": "Disabled";
             res.json({ data: [], message: "User " +status+ " Successfully", "error": "" });
         }
         else res.json({ data: [], message: "Error Occured Updating The User Status", "error": "" });

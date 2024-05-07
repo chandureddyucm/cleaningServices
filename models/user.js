@@ -12,7 +12,7 @@ const userSchema = new Schema(
         user_name: { type: String, required: true },
         gender: { type: String, required: true },
         password: { type: String, required: true },
-        is_active: {type: Boolean, required: true, default: false}
+        is_active: {type: Boolean, required: true, default: true}
     },
     { collection: "user", timestamps: true }
 );
