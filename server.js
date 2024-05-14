@@ -8,11 +8,10 @@ const cors = require("cors");
 mongoose
   .connect(
     "mongodb+srv://bandasrinivasulu123:S6uRgHni5GxvyP9b@clustersrinu.itvxdtz.mongodb.net/",
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    { useNewUrlParser: true, useUnifiedTopology: true } //comment if not working
   )
   .then(() => {
     console.log("Connected to MongoDB");
-    // Your application logic after successful connection
   })
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
@@ -25,14 +24,13 @@ app.listen(port, () => {
   console.log(`Listening on Port: ${port}`);
 });
 
-const UserRoute = require('./routes/user');
-const StaffRoute = require('./routes/staff');
-const AdminRoute = require('./routes/admin');
+const UserRoute = require("./routes/user");
+const StaffRoute = require("./routes/staff");
+const AdminRoute = require("./routes/admin");
 
-app.use('/api/user', UserRoute);
-app.use('/api/staff', StaffRoute);
-app.use('/api/admin', AdminRoute);
-
+app.use("/api/user", UserRoute);
+app.use("/api/staff", StaffRoute);
+app.use("/api/admin", AdminRoute);
 
 app.get("/", (req, res) => {
   res.send("Backend Works");
