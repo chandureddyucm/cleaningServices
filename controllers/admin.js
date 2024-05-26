@@ -1,5 +1,8 @@
 const { v4: uuidv4 } = require("uuid");
 const Admin = require("../models/admin");
+const User = require("../models/user");
+const Staff = require("../models/staff");
+const Service = require("../models/service");
 
 const admins = (req, res, next) => {
   Admin.find()
@@ -126,10 +129,94 @@ const updateAdminPassword = (req, res, next) => {
   });
 };
 
+const toggleUser = (req, res, next)=>{
+  User.updateOne({uuid: req.body.uuid}, {$set:{ is_deleted : req.body.is_deleted}}).then(response=>{
+      if (response.modifiedCount > 0) {
+          let status = !req.body.is_deleted ? "Enabled": "Disabled";
+          res.json({ data: [], message: "User " +status+ " Successfully", Error: "", status: 200 });
+      }
+      else res.json({ data: [], message: "Error Occured Updating The User Status", Error: "", status: 200 });
+  })
+}
+
+const toggleStaff = (req, res, next)=>{
+  Staff.updateOne({uuid: req.body.uuid}, {$set:{ is_deleted : req.body.is_deleted}}).then(response=>{
+      if (response.modifiedCount > 0) {
+          let status = !req.body.is_deleted ? "Enabled": "Disabled";
+          res.json({ data: [], message: "Staff " +status+ " Successfully", Error: "", status: 200 });
+      }
+      else res.json({ data: [], message: "Error Occured Updating The Staff Status", Error: "", status: 200 });
+  })
+}
+
+const addService = (req, res, next)=>{
+  let new_service = new Service({
+    uuid: uuidv4(),
+    name: req.body.name,
+    description: req.body.description,
+    cost: req.body.cost,
+    time: req.body.time
+  });
+  new_service
+    .save()
+    .then((response) => {
+      res.json({ data: [], message: "Service Added Successfully", error: "" });
+    })
+    .catch((error) => {
+      res.json({
+        data: [],
+        message: "An Error Occured Adding the service",
+        error: error.message,
+      });
+    });
+}
+
+const modifyService = (req, res, next)=>{
+  Service.updateOne(
+    { uuid: req.body.uuid },
+    {
+      $set: {
+        name: req.body.name,
+        description: req.body.description,
+        cost: req.body.cost,
+        time: req.body.time
+      },
+    }
+  ).then((response) => {
+    if (response.modifiedCount > 0) {
+      res.json({
+        data: [],
+        message: "Service Details Updated Successfully",
+        error: "",
+      });
+    } else
+      res.json({
+        data: [],
+        message: "Error Occured Updating The Service Details",
+        error: "",
+      });
+  });
+}
+
+const toggleService = (req, res, next)=>{
+  Service.updateOne({uuid: req.body.uuid}, {$set:{ is_deleted : req.body.is_deleted}}).then(response=>{
+      if (response.modifiedCount > 0) {
+          let status = !req.body.is_deleted ? "Enabled": "Disabled";
+          res.json({ data: [], message: "Service " +status+ " Successfully", Error: "", status: 200 });
+      }
+      else res.json({ data: [], message: "Error Occured Updating The Service Status", Error: "", status: 200 });
+  })
+}
+
 module.exports = {
   admins,
   registerAdmin,
   admin,
   updateAdmin,
   updateAdminPassword,
+  toggleUser,
+  toggleStaff,
+  addService,
+  modifyService,
+  toggleService
 };

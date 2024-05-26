@@ -10,4 +10,13 @@ router.post("/get-admin", AdminController.admin);
 router.post("/update-admin", AdminController.updateAdmin);
 router.post("/update-admin-password", AdminController.updateAdminPassword);
 
+router.post("/toggle-staff", AdminController.toggleStaff);
+router.post("/toggle-user", AdminController.toggleUser);
+
+router.post("/add-service", AdminController.addService);
+router.post("/modify-service", AdminController.modifyService);
+router.post("/toggle-service", AdminController.toggleService);
+
+
+
 module.exports = router;
