@@ -17,7 +17,7 @@ const users = (req, res, next) => {
 };
 
 const user = (req, res, next) => {
-  User.find({ email: req.body.email, password: req.body.password, is_active: true })
+  User.find({ email: req.body.email, password: req.body.password, is_deleted: false })
     .then((response) => {
       if (response.length > 0) {
         res.json({ data: response, message: "", error: "" });

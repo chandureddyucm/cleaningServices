@@ -17,7 +17,7 @@ const staffs = (req, res, next) => {
 };
 
 const staff = (req, res, next) => {
-  Staff.find({ email: req.body.email, password: req.body.password, is_active: true })
+  Staff.find({ email: req.body.email, password: req.body.password, is_deleted: false })
     .then((response) => {
       if (response.length > 0) {
         res.json({ data: response, message: "", error: "" });

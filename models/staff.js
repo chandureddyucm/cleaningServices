@@ -12,7 +12,7 @@ const staffSchema = new Schema(
         user_name: { type: String, required: true },
         gender: { type: String, required: true },
         password: { type: String, required: true },
-        is_deleted: {type: Boolean, required: true, default: true}
+        is_deleted: {type: Boolean, required: true, default: false}
     },
     { collection: "staff", timestamps: true }
 );

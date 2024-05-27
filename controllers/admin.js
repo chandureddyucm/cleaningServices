@@ -22,7 +22,7 @@ const admin = (req, res, next) => {
   Admin.find({
     email: req.body.email,
     password: req.body.password,
-    is_active: true,
+    is_deleted: false 
   })
     .then((response) => {
       if (response.length > 0) {
