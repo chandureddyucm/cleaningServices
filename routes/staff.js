@@ -11,4 +11,9 @@ router.post("/update-staff", StaffController.updateStaff);
 router.post("/update-staff-password", StaffController.updateStaffPassword);
 router.post("/toggle-staff", StaffController.toggleStaff);
 
+router.post("/assign-service", StaffController.assignService);
+router.post("/complete-service", StaffController.completeService);
+router.post("/get-services", StaffController.getServices);
+router.post("/get-assigned-services", StaffController.getAssignedServices);
+
 module.exports = router;
