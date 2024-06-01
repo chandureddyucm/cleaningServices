@@ -208,6 +208,16 @@ const toggleService = (req, res, next)=>{
   })
 }
 
+const viewServices = (req, res, next)=>{
+  Service.find().then(response=>{
+    if (response.length > 0) {
+      res.json({ data: response, message: "", error: "" });
+    } else {
+      res.json({ data: response, message: "No Services Found", error: "" });
+    }
+  })
+}
+
 module.exports = {
   admins,
   registerAdmin,
@@ -218,5 +228,6 @@ module.exports = {
   toggleStaff,
   addService,
   modifyService,
-  toggleService
+  toggleService,
+  viewServices
 };

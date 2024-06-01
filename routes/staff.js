@@ -4,7 +4,7 @@ const router = express.Router();
 const StaffController = require("../controllers/staff");
 
 router.post("/register-staff", StaffController.registerStaff);
-router.get("/get-staffs", StaffController.staffs);
+router.post("/get-staffs", StaffController.staffs);
 router.post("/get-staff", StaffController.staff);
 
 router.post("/update-staff", StaffController.updateStaff);

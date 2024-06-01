@@ -16,7 +16,6 @@ router.post("/toggle-user", AdminController.toggleUser);
 router.post("/add-service", AdminController.addService);
 router.post("/modify-service", AdminController.modifyService);
 router.post("/toggle-service", AdminController.toggleService);
-
-
+router.post("/view-services", AdminController.viewServices);
 
 module.exports = router;
