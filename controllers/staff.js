@@ -94,8 +94,16 @@ const toggleStaff = (req, res, next) => {
 };
 
 const getServices = (req, res, next) => {
-  Bookings.find({ status: { $in: [0] } })
-    .then((response) => {
+  Bookings.aggregate([
+    { $match: { status: { $in: [0] } } },
+    {
+      $lookup: {
+        from: "user", 
+        localField: "user_uuid",
+        foreignField: "uuid",
+        as: "user"
+      }
+    }]).then((response) => {
       if (response.length > 0) {
         res.json({ data: response, message: "", error: "" });
       } else {
@@ -112,7 +120,16 @@ const getAssignedServices = (req, res, next) => {
   //Scheduled Services - Status = 0,1,2 and Pay button is enabled for user if status is 2 which states that service is completed
   //Completed Services - Status = 3 , on this search user is given an option to give feedback
   //Cancelled Services - Status = 4
-  Bookings.find({ staff_uuid: req.body.staff_uuid, status: { $in: req.body.status } })
+  Bookings.aggregate([
+    { $match: { staff_uuid: req.body.staff_uuid, status: { $in: req.body.status } } },
+    {
+      $lookup: {
+        from: "user", 
+        localField: "user_uuid",
+        foreignField: "uuid",
+        as: "user"
+      }
+    }])
     .then((response) => {
       if (response.length > 0) {
         res.json({ data: response, message: "", error: "" });
