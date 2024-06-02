@@ -18,4 +18,7 @@ router.post("/modify-service", AdminController.modifyService);
 router.post("/toggle-service", AdminController.toggleService);
 router.post("/view-services", AdminController.viewServices);
 
+router.post("/get-staff-report", AdminController.staffReport);
+router.post("/get-user-report", AdminController.userReport);
+
 module.exports = router;
