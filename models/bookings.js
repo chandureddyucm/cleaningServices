@@ -13,7 +13,7 @@ const bookingsSchema = new Schema(
     service_name: { type: String, required: true },
     service_cost: { type: Number, required: true },
     service_description: { type: String, required: true },
-    service_date: { type: Date, required: true },
+    service_date: { type: String, required: true },
     service_address: { type: String, required: false },
     service_for_other: { type: Boolean, required: true, default: false },
 

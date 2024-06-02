@@ -122,7 +122,7 @@ const bookService = (req, res, next) => {
 };
 
 const cancelService = (req, res, next) => {
-  Bookings.updateOne({ uuid: req.body.uuid }, { $set: { is_cancelled: 1 } }).then((response) => {
+  Bookings.updateOne({ uuid: req.body.uuid }, { $set: { is_cancelled: 1, status: 4 } }).then((response) => {
     if (response.modifiedCount > 0) {
       res.json({ data: [], message: "Cancelled booking Successfully", error: "" });
     } else res.json({ data: [], message: "Error Occured cancelling the booking", error: "" });
@@ -130,7 +130,7 @@ const cancelService = (req, res, next) => {
 };
 
 const feedbackService = (req, res, next) => {
-  Bookings.updateOne({ uuid: req.body.uuid }, { $set: { feedback: req.body.feedback, rating: req.body.rating } }).then((response) => {
+  Bookings.updateOne({ uuid: req.body.uuid }, { $set: { feedback: req.body.feedback, rating: req.body.rating, status:5 } }).then((response) => {
     if (response.modifiedCount > 0) {
       res.json({ data: [], message: "Feedback Added Successfully", error: "" });
     } else res.json({ data: [], message: "Error Occured while adding feedback to booking", error: "" });
@@ -138,6 +138,13 @@ const feedbackService = (req, res, next) => {
 };
 
 const getServices = (req, res, next) => {
+  //0 scheduled
+  //1 assigned
+  //2 completed
+  //3 completed and paid -> option to give feedback
+  //4 cancelled
+  //5 feedback given
+
   //Scheduled Services - Status = 0,1,2 and Pay button is enabled for user if status is 2 which states that service is completed
   //Completed Services - Status = 3 , on this search user is given an option to give feedback
   //Cancelled Services - Status = 4
@@ -159,6 +166,7 @@ const payForService = (req, res, next) => {
     { uuid: req.body.uuid },
     {
       $set: {
+        status: 3,
         is_paid: 1,
       }
     }
